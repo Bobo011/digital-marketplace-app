@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Icons } from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -8,27 +8,28 @@ import { cn } from "@/lib/utils";
 
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import {useForm} from 'react-hook-form'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {z} from 'zod'
-import { AuthCredentialsValidator, TAuthCredentialsValidator } from "@/lib/validators/account-credential-validator";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  AuthCredentialsValidator,
+  TAuthCredentialsValidator,
+} from "@/lib/validators/account-credential-validator";
+import { trpc } from "@/trpc/client";
 
 const Page = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TAuthCredentialsValidator>({
+    resolver: zodResolver(AuthCredentialsValidator),
+  });
 
+  const { data } = trpc.anyApiRoute.useQuery();
 
-
-const {
-  register,
-  handleSubmit,
-  formState: { errors },
-} = useForm<TAuthCredentialsValidator>({
-  resolver: zodResolver(AuthCredentialsValidator),
-});
-
-
-const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-  // mutate({ email, password });
-};
+  const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
+    // mutate({ email, password });
+  };
 
   return (
     <>
@@ -84,6 +85,6 @@ const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
       </div>
     </>
   );
-}
+};
 
-export default Page
+export default Page;
