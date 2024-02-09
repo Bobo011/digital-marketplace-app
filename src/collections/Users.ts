@@ -5,11 +5,16 @@ export const Users: CollectionConfig = {
   auth: true,
   access: {
     read: () => true,
-    create: ()=>true
+    create: () => true,
   },
   fields: [
     {
       name: "role",
+      defaultValue: "user",
+      required: true,
+      // admin: {
+      //   condition: () => false,
+      // },
       type: "select",
       options: [
         { label: "Admin", value: "admin" },
